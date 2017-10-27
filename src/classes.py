@@ -21,3 +21,58 @@ Classes:
 Link to Git Repository: https://github.com/Piquipato/Monopoly-in-Python.git
 ------------------------------------------------------------------------------------------------------------------------
 """
+
+
+class Dice:
+
+    """
+        This Class Simulates Dices on Monopoly.
+    """
+
+    def __init__(self):
+
+        import random
+        self.value = random.randint(1, 6)   # Picks a random Integer between 1 and 6
+
+    def __str__(self):
+
+        return self.value
+
+    def __add__(self, other):
+
+        x = self.value + other.value
+        return "{0} and {1} are equal to {2}".format(self.value, other.value, x)
+
+
+class Money:
+
+    """
+        This Class Simulates Money in Monopoly.
+    """
+
+    def __init__(self, cash=1500.0, currency='€'):
+
+        self.cash = cash
+        self.currency = currency
+
+    def __add__(self, other):
+
+        if (isinstance(other, int)) or (isinstance(other, float)):
+            return self.cash + other
+
+        elif isinstance(other, Money):
+            return self.cash + other.cash
+
+        else:
+            raise ValueError('Cash cannot be added up with the requested type: {0}'.format(type(other)))
+
+    def __sub__(self, other):
+
+        if (isinstance(other, int)) or (isinstance(other, float)):
+            return self.cash - other
+
+        elif isinstance(other, Money):
+            return self.cash - other.cash
+
+        else:
+            raise ValueError('Cash cannot be added up with the requested type: {0}'.format(type(other)))
