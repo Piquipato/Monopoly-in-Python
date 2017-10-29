@@ -41,6 +41,11 @@ class Player:
         self.out_of_jail_cards = 0  # Integer. Number of Out of Jail Cards the player is holding.
         self.jail_turns = 0         # Integer. Number of turns to Leave the Jail
 
+    def move(self, dice, board):
+
+        distance = dice.throw() + dice.throw()
+        return self.position + distance
+
 
 class Dice:
 
@@ -52,8 +57,14 @@ class Dice:
 
         # Initializes Dice Object.
 
+        self.value = None
+
+    def throw(self):
+
         import random
-        self.value = random.randint(1, 6)   # Picks a random Integer between 1 and 6.
+
+        self.value = random.randint(1, 6)
+        return self.value
 
     def __str__(self):
 
@@ -62,7 +73,8 @@ class Dice:
     def __add__(self, other):
 
         x = self.value + other.value
-        return "{0} and {1} are equal to {2}".format(self.value, other.value, x)
+        print("{0} and {1} are equal to {2}".format(self.value, other.value, x))
+        return x
 
 
 class Cash:
