@@ -5,7 +5,6 @@ GNU - General Public Licence v3
 Monopoly Simulator - By Piquipato
 ------------------------------------------------------------------------------------------------------------------------
 This File contains the classes which defines the objects the program is going to be working with.
-
 Classes:
 1) Dice --> Simulates Dices on Monopoly.
     a) Regular --> Regular Dices. Random Integer from 1 to 6.
@@ -16,14 +15,15 @@ Classes:
     b) Chance and Community Chest.
 4) Property --> This are the Streets from Monopoly.
 5) Board --> This is where the Game is Running.
-    a) Space --> This is where Properties are located on the board.
-6) Player --> Class which defines player information.
+6) Space --> This is where Properties are located on the board.
+7) Player --> Class which defines player information.
 ------------------------------------------------------------------------------------------------------------------------
 Link to Git Repository: https://github.com/Piquipato/Monopoly-in-Python.git
 ------------------------------------------------------------------------------------------------------------------------
 """
 
 # TO DO: Create Classes listed above.
+
 
 class Player:
 
@@ -41,10 +41,41 @@ class Player:
         self.out_of_jail_cards = 0  # Integer. Number of Out of Jail Cards the player is holding.
         self.jail_turns = 0         # Integer. Number of turns to Leave the Jail
 
-    def move(self, dice, board):
 
-        distance = dice.throw() + dice.throw()
-        return self.position + distance
+class Space:
+
+    # TO DO: Create Methods to work with Space Data.
+
+    def __init__(self, position, assigned_property):
+
+        # Initializes Space Object.
+
+        self.position = position
+        self.assigned_property = assigned_property
+
+    def PlayerOnIt(self, player):
+
+        # Checks if There is a player on the Space.
+
+        if player.position == self.position:
+            return True
+        else:
+            return False
+
+
+class Board:
+
+    # TO DO: Create Methods to work with Board Data.
+
+    def __init__(self, space, properties):
+
+        # Initializes Board Object.
+
+        self.spaces = []
+        for i in range(len(properties)):
+            for x in properties:
+                if x.id == i:
+                    self.spaces.append(space.__init__(i, x))
 
 
 class Dice:
@@ -57,14 +88,8 @@ class Dice:
 
         # Initializes Dice Object.
 
-        self.value = None
-
-    def throw(self):
-
         import random
-
-        self.value = random.randint(1, 6)
-        return self.value
+        self.value = random.randint(1, 6)   # Picks a random Integer between 1 and 6.
 
     def __str__(self):
 
@@ -73,8 +98,7 @@ class Dice:
     def __add__(self, other):
 
         x = self.value + other.value
-        print("{0} and {1} are equal to {2}".format(self.value, other.value, x))
-        return x
+        return "{0} and {1} are equal to {2}".format(self.value, other.value, x)
 
 
 class Cash:
@@ -119,12 +143,12 @@ class Property:
 
     # TO DO: Create Methods to work with Property data.
 
-    def __init__(self, name, space, price, rent, mortgage, owner=None, mortgage_per=110, ismortgage=False):
+    def __init__(self, name, idnum, price, rent, mortgage, owner=None, mortgage_per=110, ismortgage=False):
 
         # Initializes Property Object.
 
         self.name = name                                    # String. Name of the Property.
-        self.space = space                                  # Space Object. Position of a Property in the Board.
+        self.id = idnum                                     # Integer. Id of a Property to determine its Position.
         self.price = price                                  # Cash Object. Minimum Cash needed to Buy a Property.
         self.rent = rent                                    # Cash Object. Rent of the Property.
         self.owner = owner                                  # Player Object.
