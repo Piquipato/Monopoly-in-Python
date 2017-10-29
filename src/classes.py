@@ -16,14 +16,15 @@ Classes:
     b) Chance and Community Chest.
 4) Property --> This are the Streets from Monopoly.
 5) Board --> This is where the Game is Running.
-    a) Space --> This is where Properties are located on the board.
-6) Player --> Class which defines player information.
+6) Space --> This is where Properties are located on the board.
+7) Player --> Class which defines player information.
 ------------------------------------------------------------------------------------------------------------------------
 Link to Git Repository: https://github.com/Piquipato/Monopoly-in-Python.git
 ------------------------------------------------------------------------------------------------------------------------
 """
 
 # TO DO: Create Classes listed above.
+
 
 class Player:
 
@@ -40,6 +41,42 @@ class Player:
         self.position = space_in    # Space Object. Position of the Player in the Board.
         self.out_of_jail_cards = 0  # Integer. Number of Out of Jail Cards the player is holding.
         self.jail_turns = 0         # Integer. Number of turns to Leave the Jail
+
+
+class Space:
+
+    # TO DO: Create Methods to work with Space Data.
+
+    def __init__(self, position, assigned_property):
+
+        # Initializes Space Object.
+
+        self.position = position
+        self.assigned_property = assigned_property
+
+    def PlayerOnIt(self, player):
+
+        # Checks if There is a player on the Space.
+
+        if player.position == self.position:
+            return True
+        else:
+            return False
+
+
+class Board:
+
+    # TO DO: Create Methods to work with Board Data.
+
+    def __init__(self, space, properties):
+
+        # Initializes Board Object.
+
+        self.spaces = []
+        for i in range(len(properties)):
+            for x in properties:
+                if x.id == i:
+                    self.spaces.append(space.__init__(i, x))
 
 
 class Dice:
@@ -107,12 +144,12 @@ class Property:
 
     # TO DO: Create Methods to work with Property data.
 
-    def __init__(self, name, space, price, rent, mortgage, owner=None, mortgage_per=110, ismortgage=False):
+    def __init__(self, name, idnum, price, rent, mortgage, owner=None, mortgage_per=110, ismortgage=False):
 
         # Initializes Property Object.
 
         self.name = name                                    # String. Name of the Property.
-        self.space = space                                  # Space Object. Position of a Property in the Board.
+        self.id = idnum                                     # Integer. Id of a Property to determine its Position.
         self.price = price                                  # Cash Object. Minimum Cash needed to Buy a Property.
         self.rent = rent                                    # Cash Object. Rent of the Property.
         self.owner = owner                                  # Player Object.
