@@ -25,6 +25,21 @@ Link to Git Repository: https://github.com/Piquipato/Monopoly-in-Python.git
 
 # TO DO: Create Classes listed above.
 
+class Player:
+
+    # TO DO: Create Methods to work with Player Data.
+
+    def __init__(self, idnum, name, space_in):
+
+        # Initializes Player Object.
+
+        self.id = idnum             # Integer. Identification Number.
+        self.cash = Cash(1500)      # Cash Object. Amount of Cash on Hand.
+        self.name = name            # String. Name of the Player.
+        self.position = space_in    # Space Object. Position of the Player in the Board.
+        self.out_of_jail_cards = 0  # Integer. Number of Out of Jail Cards the player is holding.
+        self.jail_turns = 0         # Integer. Number of turns to Leave the Jail
+
 
 class Dice:
 
@@ -34,10 +49,10 @@ class Dice:
 
     def __init__(self):
 
-        # Initializes Dice Object
+        # Initializes Dice Object.
 
         import random
-        self.value = random.randint(1, 6)   # Picks a random Integer between 1 and 6
+        self.value = random.randint(1, 6)   # Picks a random Integer between 1 and 6.
 
     def __str__(self):
 
@@ -59,7 +74,7 @@ class Cash:
 
     def __init__(self, cash=1500.0, currency='€'):
 
-        # Initializes Cash Object
+        # Initializes Cash Object.
 
         self.cash = cash
         self.currency = currency
@@ -91,19 +106,21 @@ class Property:
 
     # TO DO: Create Methods to work with Property data.
 
-    def __init__(self, name, space, price, rent, owner=None, mortgage=False):
+    def __init__(self, name, space, price, rent, mortgage, owner=None, mortgage_per=110, ismortgage=False):
 
-        # Initializes Property Object
+        # Initializes Property Object.
 
-        self.name = name
-        self.space = space          # Space Object
-        self.price = price          # Cash Object
-        self.rent = rent            # Cash Object
-        self.owner = owner          # Player Object
-        self.mortgage = mortgage    # Cash Object
+        self.name = name                                    # String. Name of the Property.
+        self.space = space                                  # Space Object. Position of a Property in the Board.
+        self.price = price                                  # Cash Object. Minimum Cash needed to Buy a Property.
+        self.rent = rent                                    # Cash Object. Rent of the Property.
+        self.owner = owner                                  # Player Object.
+        self.mortgage = mortgage                            # Cash Object. Mortgage refund.
+        self.rebuy_mort = mortgage * (mortgage_per / 100)   # Cash Object. Mortgage Rebuy.
+        self.mortgage_status = ismortgage                   # Boolean. Mortgage Status.
 
 
-class Street(Property):     # Inherits from Property
+class Street(Property):     # Inherits from Property.
 
     # TO DO: Create Methods to work with Street data.
 
@@ -113,8 +130,13 @@ class Street(Property):     # Inherits from Property
 
         Property.__init__(name, space, price, rent, owner, mortgage)
 
-        self.color = color                      # Color Object
-        self.price_building = price_building    # Tuple with Cash Objects
-        self.rent_monopoly = rent * 2           # Cash Object
-        self.rent_building = rent_building      # Tuple with Cash Objects
-        self.number_buildings = 0               # Integer
+        self.color = color                      # Color Object. Color of Monopoly.
+        self.price_building = price_building    # Tuple with Cash Objects. Building Prices.
+        self.rent_monopoly = rent * 2           # Cash Object. Rent of the Property when Someone has Monopoly.
+        self.rent_building = rent_building      # Tuple with Cash Objects. Rent of the Property with Buildings.
+        self.number_buildings = 0               # Integer. Number of Buildings.
+
+
+class Railroad(Property):
+
+    # TO DO: Create Methods to work with Railroad Data.
