@@ -36,6 +36,7 @@ class Player:
         self.id = idnum             # Integer. Identification Number.
         self.cash = Cash(1500)      # Cash Object. Amount of Cash on Hand.
         self.name = name            # String. Name of the Player.
+        self.properties = []        # List of Properties.
         self.position = space_in    # Space Object. Position of the Player in the Board.
         self.out_of_jail_cards = 0  # Integer. Number of Out of Jail Cards the player is holding.
         self.jail_turns = 0         # Integer. Number of turns to Leave the Jail
@@ -140,3 +141,11 @@ class Street(Property):     # Inherits from Property.
 class Railroad(Property):
 
     # TO DO: Create Methods to work with Railroad Data.
+
+    def __init__(self):
+
+        # Initializes the Railroad Object
+
+        self.rent_2 = self.rent * 2
+        self.rent_3 = self.rent * 3
+        self.rent_4 = self.rent * 4
