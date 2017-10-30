@@ -5,7 +5,6 @@ GNU - General Public Licence v3
 Monopoly Simulator - By Piquipato
 ------------------------------------------------------------------------------------------------------------------------
 This File contains the classes which defines the objects the program is going to be working with.
-
 Classes:
 1) Dice --> Simulates Dices on Monopoly.
     a) Regular --> Regular Dices. Random Integer from 1 to 6.
