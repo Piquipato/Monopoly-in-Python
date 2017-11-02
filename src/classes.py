@@ -354,38 +354,52 @@ class PlotOfStreetsHand(Hand):
     pass
 
 
-class Board:
-    pass
+class Position:
+
+    def __init__(self, PosNum):
+
+        self.Position = PosNum
 
 
 class Square:
-    pass
-
-
-class Space:
 
     # TODO: Create Methods to work with Space Data.
 
-    def __init__(self, Name, IdNum, Square):
+    def __init__(self, Name, IdNum, Pos=None):
 
         self.Name = Name
+        self.Position = Position(Pos)
         self.IdNum = IdNum
-        self.Square = Square
 
-    def PlayerOnIt(self, Player):
+    def PlayerOnIt(self, player):
 
-        if Player.Position == self.Square:
+        if player.Position == self.Position:
             return True
 
         else:
             return False
 
 
-class Property(Space):
+class Board:
 
-    def __init__(self, Name, IdNum, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, CardNum=None):
+    def __init__(self, BoardSize=44):
 
-        Space.__init__(Name, IdNum)
+        import sqlite3
+
+        sql = sqlite3.connect('Squares.db')
+        a = sql.cursor()
+
+        self.Squares = []
+        for i in range(BoardSize - 1):
+            self.Squares.append(Square((a.execute("SELECT Name FROM Squares WHERE IdNum=?", i)),
+                                       (a.execute("SELECT Position FROM Squares WHERE IdNum=?", i))))
+
+
+class Property(Square):
+
+    def __init__(self, Name, Pos, IdNum, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None):
+
+        Square.__init__(Name, IdNum, Pos)
         self.Price = Price
         self.Rent = Rent
         self.Mortgage = Price * (Mortgage/100)
@@ -393,9 +407,10 @@ class Property(Space):
         self.StMortgage = StMortgage
 
 
-
 class Street(Property):
-    pass
+
+    def __init__(Name, x, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, CardNum=None):
+        pass
 
 
 class PlotOfStreets(Street):
@@ -410,27 +425,27 @@ class Utility(Property):
     pass
 
 
-class Tax(Space):
+class Tax(Square):
     pass
 
 
-class Chance(Space):
+class Chance(Square):
     pass
 
 
-class CommunityChest(Space):
+class CommunityChest(Square):
     pass
 
 
-class ParkingLot(Space):
+class ParkingLot(Square):
     pass
 
 
-class Jail:
+class Jail(Square):
     pass
 
 
-class GoToJail:
+class GoToJail(Square):
 
     def __init__(self, player):
 
@@ -456,3 +471,18 @@ class HumanPlayer(Player):
 
 class Bank(AI):
     pass
+
+
+def addSquaretoSqlite(sql, square, mode='Square'):
+
+    a = sql.cursor()
+
+    if mode == 'Square':
+        a.execute("INSERT INTO Squares VALUES(?,?,?)", (square.Position.Position, square.Name, square.IdNum))
+
+
+if __name__ == '__main__':  # IGNORE THIS !!
+    import sqlite3
+    sql = sqlite3.connect('Squares.db')
+    obj = Square( Name='GO', IdNum=1, Pos=1)
+    addSquaretoSqlite(sql, obj)
