@@ -43,6 +43,8 @@ Link to Git Repository: https://github.com/Piquipato/Monopoly-in-Python.git
 # TODO: Create Classes listed above.
 # TODO: Define their attributes and their methods.
 
+from colour import Color
+
 
 class Monopoly:
     pass
@@ -397,7 +399,7 @@ class Board:
 
 class Property(Square):
 
-    def __init__(self, Name, Pos, IdNum, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None):
+    def __init__(self, Name, Pos, IdNum, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None, Owner=None):
 
         Square.__init__(Name, IdNum, Pos)
         self.Price = Price
@@ -405,26 +407,52 @@ class Property(Square):
         self.Mortgage = Price * (Mortgage/100)
         self.ReMortgage = self.Mortgage * (ReMortgage/100)
         self.StMortgage = StMortgage
+        self.Card = Card
+        self.Owner = Owner
 
 
 class Street(Property):
 
-    def __init__(Name, x, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, CardNum=None):
-        pass
-
-
+    def __init__(self, Name, Pos, IdNum, Price, Rent, PriceBuildings, RentBuildings, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None, Owner=None):
+        
+        Property.__init__(Name, Pos, IdNum, Price, Rent, Mortgage, ReMortgage, StMortgage, Card, Owner)
+        self.PriceBuildings = PriceBuildings
+        self.RentBuildings = RentBuildings
+        
+        
 class PlotOfStreets(Street):
-    pass
+    
+    def __init__(self, streets, color)
+        self.Streets = streets
+        self.Color = color
 
 
 class Railroad(Property):
-    pass
+    
+    def __init__(self, Name, Pos, IdNum, Price, Rent, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None, Owner=None)
+        
+        Property.__init__(Name, Pos, IdNum, Price, Rent, Mortgage, ReMortgage, StMortgage, Card, Owner)
+        self.Rentx2 = Rent * 2
+        self.Rentx3 = Rent * 3
+        self.Rentx4 = Rent * 4
 
-
+        
 class Utility(Property):
-    pass
-
-
+    
+    def __init__(self, Name, Pos, IdNum, Price, Mortgage=50, ReMortgage=110, StMortgage=False, Card=None, Owner=None)
+        
+        import random
+        
+        Property.__init__(Name=Name, Pos=Pos, IdNum=IdNum, Price=Price, Mortgage=Mortgage, ReMortgage=ReMortgage, StMortgage=StMortgage
+                          Card=Card, Owner=Owner)
+        self.Dice1 = random.randint(1, 6)
+        self.Dice2 = random.randint(1, 6)
+        self.Value = self.Dice1 + self.Dice2
+        
+        if type(Utility()) in Owner.PropertyHand:
+            
+      
+    
 class Tax(Square):
     pass
 
